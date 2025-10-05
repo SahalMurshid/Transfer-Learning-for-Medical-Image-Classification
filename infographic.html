@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-Ray Classifier Project Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Dark background */
+            color: #e6e6e6; /* Light text */
+        }
+        /* Custom gradient for key metrics */
+        .gradient-box {
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            color: #0d1117;
+            box-shadow: 0 10px 20px rgba(6, 182, 212, 0.4);
+        }
+        /* Style for the step cards */
+        .step-card {
+            background-color: #161b22;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .step-card:hover {
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), 0 5px 10px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px);
+            border-color: #10b981;
+        }
+        .step-number {
+            background-color: #10b981; /* Teal green accent */
+        }
+        .arrow-path {
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100px;
+            height: 2px;
+            background-color: #24292e;
+            transform: translateY(-50%);
+        }
+        .arrow-head {
+            content: '';
+            position: absolute;
+            top: -4px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid #24292e;
+            border-right: 2px solid #24292e;
+            transform: rotate(45deg);
+        }
+
+        @media (max-width: 1024px) {
+            .arrow-path {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+    <!-- Header -->
+    <header class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-[#06b6d4] tracking-tight mb-2">
+            X-Ray Classification Project
+        </h1>
+        <p class="text-xl text-gray-400">From Data Prep to Deployment: Our Deep Learning Workflow</p>
+    </header>
+
+    <!-- Key Metrics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
+        <!-- Metric 1: Overall Accuracy -->
+        <div class="gradient-box p-6 rounded-xl text-center">
+            <p class="text-xs uppercase font-semibold opacity-80">Overall Accuracy</p>
+            <p class="text-4xl font-black mt-1">90.22%</p>
+        </div>
+        <!-- Metric 2: Recall (Positive Case) -->
+        <div class="gradient-box p-6 rounded-xl text-center">
+            <p class="text-xs uppercase font-semibold opacity-80">Recall (Sensitivity)</p>
+            <p class="text-4xl font-black mt-1">93.1%</p>
+        </div>
+        <!-- Metric 3: Optimal Threshold -->
+        <div class="gradient-box p-6 rounded-xl text-center">
+            <p class="text-xs uppercase font-semibold opacity-80">Decision Threshold</p>
+            <p class="text-4xl font-black mt-1">0.700</p>
+        </div>
+    </div>
+
+    <!-- Workflow Infographic Steps -->
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+
+            <!-- Step 1: Transfer Learning Setup -->
+            <div class="step-card p-6 rounded-xl border-2 border-transparent relative">
+                <span class="step-number text-white font-bold h-10 w-10 flex items-center justify-center rounded-full mb-4 text-lg">1</span>
+                <h2 class="text-2xl font-bold mb-3 text-[#06b6d4]">Transfer Learning Setup</h2>
+                <p class="text-gray-400">The ResNet50 base model was loaded, **pre-trained on ImageNet**. This provides a strong foundation of image features, saving huge training time.</p>
+                <ul class="mt-4 text-sm list-disc pl-5 text-gray-500">
+                    <li>Data Augmentation Applied (Rotation, Zoom)</li>
+                    <li>Weighted Loss to address class imbalance</li>
+                </ul>
+                <div class="arrow-path hidden lg:block"><span class="arrow-head"></span></div>
+            </div>
+
+            <!-- Step 2: Feature Extraction (Phase 1) -->
+            <div class="step-card p-6 rounded-xl border-2 border-transparent relative">
+                <span class="step-number text-white font-bold h-10 w-10 flex items-center justify-center rounded-full mb-4 text-lg">2</span>
+                <h2 class="text-2xl font-bold mb-3 text-[#06b6d4]">Phase 1: Freeze & Train</h2>
+                <p class="text-gray-400">The ResNet50 base was **frozen** to lock in pre-trained weights. Only the newly added classification **Dense Head** was trained using a standard learning rate.</p>
+                <ul class="mt-4 text-sm list-disc pl-5 text-gray-500">
+                    <li>Goal: Quickly adapt the output layer.</li>
+                    <li>Prevented catastrophic forgetting.</li>
+                </ul>
+                <div class="arrow-path hidden lg:block"><span class="arrow-head"></span></div>
+            </div>
+
+            <!-- Step 3: Fine-Tuning (Phase 2) -->
+            <div class="step-card p-6 rounded-xl border-2 border-transparent relative">
+                <span class="step-number text-white font-bold h-10 w-10 flex items-center justify-center rounded-full mb-4 text-lg">3</span>
+                <h2 class="text-2xl font-bold mb-3 text-[#06b6d4]">Phase 2: Deep Fine-Tuning</h2>
+                <p class="text-gray-400">The entire ResNet50 base was **unfrozen**. Training continued with an extremely **low learning rate** ($1e-5$).</p>
+                <ul class="mt-4 text-sm list-disc pl-5 text-gray-500">
+                    <li>Goal: Tweak low-level X-ray features.</li>
+                    <li>Crucial step to avoid the "Class Collapse" bug.</li>
+                </ul>
+                <div class="arrow-path hidden lg:block"><span class="arrow-head"></span></div>
+            </div>
+
+            <!-- Step 4: Threshold Optimization -->
+            <div class="step-card p-6 rounded-xl border-2 border-transparent relative">
+                <span class="step-number text-white font-bold h-10 w-10 flex items-center justify-center rounded-full mb-4 text-lg">4</span>
+                <h2 class="text-2xl font-bold mb-3 text-[#06b6d4]">Threshold & Deployment</h2>
+                <p class="text-gray-400">The model's probability outputs were tuned. We found the **Optimal Decision Threshold** of **$0.700$** to maximize balanced accuracy.</p>
+                <ul class="mt-4 text-sm list-disc pl-5 text-gray-500">
+                    <li>Model saved as: `ResNet50_Medical_XRay_final.h5`</li>
+                    <li>Threshold saved to: `decision_threshold.txt`</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer / Summary -->
+    <footer class="text-center mt-20 pt-8 border-t border-gray-800 max-w-5xl mx-auto">
+        <p class="text-gray-500 text-sm">Project successful and model deployed. Ready to classify new images using the saved configuration.</p>
+    </footer>
+
+</body>
+</html>
